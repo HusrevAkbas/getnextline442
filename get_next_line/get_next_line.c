@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/17 16:29:37 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/17 16:41:06 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,35 @@
 	2- NULL: there is nothing else to read, or an error
 	occurred
 */
-void	read_bytes(int fd, char *buffer)
+int	read_bytes(int fd, char *buffer)
 {
 	char		strofonechar[1];
-	static int	i;
+	int	i;
 	
 	i = 0;
 	while (read(fd, strofonechar, 1))
 	{
+		if (strofonechar[0] == 0 && i == 0)
+			return (0);
 		if (i == BUFFER_SIZE)
 		{
 			buffer[BUFFER_SIZE] = 0;
-			return ;
+			return (i);
 		}
 		if (!strofonechar[0])
 		{
 			buffer[BUFFER_SIZE] = 0;
-			return ;
+			return (i);
 		}
 		buffer[i] = strofonechar[0];
 		if (strofonechar[0] == '\n')
 		{
 			buffer[BUFFER_SIZE] = 0;
-			return ;
+			return (i);
 		}
 		i++;
 	}
+	return (i);
 }
 
 char	*get_next_line(int fd)
