@@ -13,7 +13,7 @@ d:
 	./${TARGET}
 
 clean:
-	rm test
+	rm -f test
 
 show:
 
