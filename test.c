@@ -7,12 +7,12 @@ int main()
 	char *str = "";
 	if (fd != -1)
 	{
-		while (str)
-		{
+		//while (str)
+		//{
+			sleep(2);
 			str = get_next_line(fd);
 			printf("%s", str);
-			sleep(2);
-		}
+		//}
 	}
 	close(fd);
 	return (0);
