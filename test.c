@@ -4,20 +4,15 @@
 int main()
 {
 	int	fd = open("file", O_RDONLY);
+	char *str = "";
 	if (fd != -1)
 	{
-		printf("%s", get_next_line(fd));
-		//sleep(3);
-		//printf("%s", get_next_line(fd));
-		//sleep(3);
-		//printf("%s", get_next_line(fd));
-		//sleep(3);
-		//printf("%s", get_next_line(fd));
-		//sleep(3);
-		//printf("%s", get_next_line(fd));
-		//sleep(3);
-		//printf("%s", get_next_line(fd));
-		//sleep(3);
+		while (str)
+		{
+			str = get_next_line(fd);
+			printf("%s", str);
+			sleep(2);
+		}
 	}
 	close(fd);
 	return (0);

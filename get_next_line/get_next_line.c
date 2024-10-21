@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/21 14:28:43 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/21 15:15:52 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	read_bytes(int fd, char *buffer)
 	onechar[1] = 0;	
 	while ((i += read(fd, onechar, 1)))
 	{
-		if (onechar[0] == '\n' || i == BUFFER_SIZE - 2)
+		if (onechar[0] == '\n' || i == BUFFER_SIZE - 1)
 		{
 			buffer[i - 1] = onechar[0];
 			buffer[i] = 0;
@@ -69,6 +69,7 @@ int	read_bytes(int fd, char *buffer)
 		}
 		buffer[i - 1] = onechar[0];
 	}
+	buffer[i] = 0;
 	return (0);
 }
 
@@ -82,15 +83,16 @@ char	*get_next_line(int fd)
 	line = malloc(BUFFER_SIZE);
 	line[BUFFER_SIZE-1] = 0;
 	bytes = read_bytes(fd, buffer);
+	if (bytes == 0)
+		return (NULL);
 	if (bytes)
 		line = ft_memmove(line, buffer, bytes);
-	//while (line[ft_strlen(line) - 1] != '\n' && bytes)
-	//{
-	//	bytes = read_bytes(fd, buffer);
-	//	middle_str = line;
-	//	line = ft_strjoin(middle_str, buffer);
-	//	free(middle_str);
-	//}
-	line[ft_strlen(line)]= 0;
+	while (line[ft_strlen(line) - 1] != '\n' && bytes)
+	{
+		bytes = read_bytes(fd, buffer);
+		middle_str = line;
+		line = ft_strjoin(middle_str, buffer);
+		free(middle_str);
+	}
 	return (line);
 }
