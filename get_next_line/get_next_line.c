@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/17 16:41:06 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/21 14:28:43 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,82 @@
 	Return value:
 
 	1- Read line: correct behavior
-	2- NULL: there is nothing else to read, or an error
-	occurred
+	2- NULL: there is nothing else to read, or an error occurred
 */
+size_t	ft_strlen(const char *str)
+{
+	size_t	length;
+
+	length = 0;
+	while (str[length])
+	{
+		length++;
+	}
+	return (length);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char			*pointer;
+	unsigned int	s1_length;
+	unsigned int	s2_length;
+	unsigned int	i;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	s1_length = strlen(s1);
+	s2_length = strlen(s2);
+	pointer = malloc(s1_length + s2_length + 1);
+	if (pointer == NULL)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		pointer[i++] = *s1++;
+	while (*s2)
+		pointer[i++] = *s2++;
+	pointer[i] = 0;
+	return (pointer);
+}
+
 int	read_bytes(int fd, char *buffer)
 {
-	char		strofonechar[1];
-	int	i;
-	
+	char	onechar[2];
+	int		i;
+
 	i = 0;
-	while (read(fd, strofonechar, 1))
+	onechar[1] = 0;	
+	while ((i += read(fd, onechar, 1)))
 	{
-		if (strofonechar[0] == 0 && i == 0)
-			return (0);
-		if (i == BUFFER_SIZE)
+		if (onechar[0] == '\n' || i == BUFFER_SIZE - 2)
 		{
-			buffer[BUFFER_SIZE] = 0;
+			buffer[i - 1] = onechar[0];
+			buffer[i] = 0;
 			return (i);
 		}
-		if (!strofonechar[0])
-		{
-			buffer[BUFFER_SIZE] = 0;
-			return (i);
-		}
-		buffer[i] = strofonechar[0];
-		if (strofonechar[0] == '\n')
-		{
-			buffer[BUFFER_SIZE] = 0;
-			return (i);
-		}
-		i++;
+		buffer[i - 1] = onechar[0];
 	}
-	return (i);
+	return (0);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	
-	buffer = malloc(BUFFER_SIZE + 1);
-	
-	read_bytes(fd, buffer);
-	printf("%s", buffer);
-	read_bytes(fd, buffer);
-	printf("%s", buffer);
-	read_bytes(fd, buffer);
-	printf("%s", buffer);
-	
-	free(buffer);
-	return (0);
+	char	buffer[BUFFER_SIZE];
+	char	*line;
+	char	*middle_str;
+	int		bytes;
+
+	line = malloc(BUFFER_SIZE);
+	line[BUFFER_SIZE-1] = 0;
+	bytes = read_bytes(fd, buffer);
+	if (bytes)
+		line = ft_memmove(line, buffer, bytes);
+	//while (line[ft_strlen(line) - 1] != '\n' && bytes)
+	//{
+	//	bytes = read_bytes(fd, buffer);
+	//	middle_str = line;
+	//	line = ft_strjoin(middle_str, buffer);
+	//	free(middle_str);
+	//}
+	line[ft_strlen(line)]= 0;
+	return (line);
 }

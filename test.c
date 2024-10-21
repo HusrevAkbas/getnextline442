@@ -5,7 +5,20 @@ int main()
 {
 	int	fd = open("file", O_RDONLY);
 	if (fd != -1)
-		get_next_line(fd);
+	{
+		printf("%s", get_next_line(fd));
+		//sleep(3);
+		//printf("%s", get_next_line(fd));
+		//sleep(3);
+		//printf("%s", get_next_line(fd));
+		//sleep(3);
+		//printf("%s", get_next_line(fd));
+		//sleep(3);
+		//printf("%s", get_next_line(fd));
+		//sleep(3);
+		//printf("%s", get_next_line(fd));
+		//sleep(3);
+	}
 	close(fd);
 	return (0);
 }

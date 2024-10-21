@@ -9,7 +9,7 @@ all:
 	./${TARGET}
 	
 d:
-	cc -g ${CFLAGS} -D BUFFER_SIZE=42 ${SRC} test.c -o ${TARGET}
+	cc -g ${CFLAGS} -D BUFFER_SIZE=10 ${SRC} test.c -o ${TARGET}
 	./${TARGET}
 
 clean:
@@ -18,7 +18,7 @@ clean:
 show:
 
 val:
-	cc -g ${CFLAGS} -D BUFFER_SIZE=432 ${SRC} test.c -o ${TARGET}
+	cc -g ${CFLAGS} -D BUFFER_SIZE=4 ${SRC} test.c -o ${TARGET}
 	valgrind -s --leak-check=yes --show-leak-kinds=all --track-origins=yes ./test
 
 run:
