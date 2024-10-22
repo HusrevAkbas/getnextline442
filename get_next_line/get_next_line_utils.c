@@ -6,11 +6,12 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/21 19:36:00 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/22 20:12:35 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <limits.h>
 
 size_t	ft_strlen(const char *str)
 {
@@ -24,27 +25,34 @@ size_t	ft_strlen(const char *str)
 	return (length);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strncat(char *dst, char *src, size_t size)
 {
-	char			*pointer;
-	unsigned int	s1_length;
-	unsigned int	s2_length;
-	unsigned int	i;
+	char	*new;
+	size_t	i;
+	size_t	j;
+	size_t	src_length;
+	size_t	dst_length;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	s1_length = strlen(s1);
-	s2_length = strlen(s2);
-	pointer = malloc(s1_length + s2_length + 1);
-	if (pointer == NULL)
-		return (NULL);
+	src_length = ft_strlen(src);
+	dst_length = ft_strlen(dst);
 	i = 0;
-	while (*s1)
-		pointer[i++] = *s1++;
-	while (*s2)
-		pointer[i++] = *s2++;
-	pointer[i] = 0;
-	return (pointer);
+	new = malloc(src_length + dst_length + 1);
+	if (new && size > 0)
+	{
+		while (dst[i])
+		{
+			new[i] = dst[i];
+			i++;
+		}
+		j = 0;
+		while (src[j] && size - j > dst_length + 1)
+		{
+			new[i++] = src[j++];
+		}
+		size--;
+	}
+	new[i] = 0;
+	return (new);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -53,8 +61,6 @@ char	*ft_strchr(const char *s, int c)
 	int		size;
 	int		i;
 
-	while (c >= 128)
-		c = c - 128;
 	i = 0;
 	size = ft_strlen(s);
 	pointer = (char *) s;
@@ -65,4 +71,54 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	return (0);
+}
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	char	*pointer;
+	size_t	i;
+	size_t	div;
+
+	if (nmemb == 0 || size == 0)
+		return ((void *) malloc(0));
+	div = ULONG_MAX / nmemb;
+	if (div < size)
+		return (0);
+	pointer = (char *) malloc(nmemb * size);
+	if (pointer == NULL)
+	{
+		free(pointer);
+		return (NULL);
+	}
+	i = 0;
+	while (i < size * nmemb)
+		pointer[i++] = 0;
+	return ((void *) pointer);
+}
+
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char	*destination;
+	unsigned char	*source;
+
+	destination = (unsigned char *) dest;
+	source = (unsigned char *) src;
+	if (dest == src)
+		return (dest);
+	if (dest - src < 0)
+	{
+		while (n > 0)
+		{
+			*destination++ = *source++;
+			n--;
+		}
+	}
+	else
+	{
+		while (n > 0)
+		{
+			n--;
+			*destination-- = *source--;
+		}
+	}	
+	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:10:35 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/21 19:36:14 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/22 20:15:43 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # include <string.h> // DELETE THIS LINE
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 12
 #endif //BUFFER_SIZE
 
 char	*get_next_line(int fd);
 void	*ft_memmove(void *dest, const void *src, size_t n);
-char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
-
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strncat(char *dst, char *src, size_t size);
 #endif // GET_NEXT_LINE_H
