@@ -6,11 +6,11 @@ SRC := $(wildcard get_next_line*/*.c)# $(wildcard tests_bonus/*.c)
 
 all:
 	cc -g ${CFLAGS} ${SRC} test.c -o ${TARGET}
-	./${TARGET}
+	./${TARGET} | cat -e
 	
 d:
 	cc -g ${CFLAGS} -D BUFFER_SIZE=10 ${SRC} test.c -o ${TARGET}
-	./${TARGET}
+	./${TARGET} | cat -e
 
 clean:
 	rm -f test

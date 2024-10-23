@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: husrevakbas <husrevakbas@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/23 13:46:20 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:56:41 by husrevakbas      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ char	*ft_strnjoin(char *dst, char *src, size_t size)
 	size_t	src_length;
 	size_t	dst_length;
 
+	if (!dst)
+		return (NULL);
 	src_length = ft_strlen(src);
 	dst_length = ft_strlen(dst);
 	i = 0;
 	new = malloc(src_length + dst_length + 1);
-	if (new && size > 0)
+	if (new)
 	{
 		while (dst[i])
 		{
@@ -45,13 +47,15 @@ char	*ft_strnjoin(char *dst, char *src, size_t size)
 			i++;
 		}
 		j = 0;
-		while (src[j] && size - j > dst_length + 1)
+		while (src[j] && j < size)
 		{
-			new[i++] = src[j++];
+			new[i] = src[j];
+			i++;
+			j++;
 		}
 		size--;
-	}
 	new[i] = 0;
+	}
 	return (new);
 }
 
@@ -117,7 +121,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		while (n > 0)
 		{
 			n--;
-			*destination-- = *source--;
+			destination[n] = source[n];
 		}
 	}	
 	return (dest);

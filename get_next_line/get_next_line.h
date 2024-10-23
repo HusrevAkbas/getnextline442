@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: husrevakbas <husrevakbas@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:10:35 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/23 14:02:47 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:41:54 by husrevakbas      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h> // DELETE THIS LINE
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 120
+# define BUFFER_SIZE 1200
 #endif //BUFFER_SIZE
 
 char	*get_next_line(int fd);
