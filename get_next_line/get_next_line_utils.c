@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/22 20:12:35 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/23 13:46:20 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlen(const char *str)
 	return (length);
 }
 
-char	*ft_strncat(char *dst, char *src, size_t size)
+char	*ft_strnjoin(char *dst, char *src, size_t size)
 {
 	char	*new;
 	size_t	i;

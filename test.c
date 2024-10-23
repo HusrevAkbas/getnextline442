@@ -12,8 +12,6 @@ int main()
 			str = get_next_line(fd);
 			printf("%s", str);
 			sleep(2);
-			str = get_next_line(fd);
-			printf("%s", str);
 		}
 	}
 	close(fd);
