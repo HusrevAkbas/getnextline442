@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/24 16:08:03 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/24 16:54:33 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*read_fd(char **total, char *buffer, int fd)
 	char	*middle;
 
 	bytes = 1;
-	while (bytes > 0 && !ft_strchr(*total, '\n'))
+	while (bytes > 0 && !ft_strchr(*total, '\n') && read(fd, NULL, 0) != -1)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
@@ -50,15 +50,15 @@ char	*read_fd(char **total, char *buffer, int fd)
 	}
 	if (bytes == 0 && !(**total))
 		return (NULL);
-	else if (**total && ft_strchr(*total, '\n'))
-		return (get_nl(total));
 	else if (**total && !ft_strchr(*total, '\n'))
 	{
 		result = ft_calloc(ft_strlen(*total) + 1, sizeof(char));
-		ft_memmove(result, *total, ft_strlen(*total) + 1);
+		ft_memmove(result, *total, ft_strlen(*total));
 		**total = 0;
 		return (result);
 	}
+	else if (**total && ft_strchr(*total, '\n'))
+		return (get_nl(total));
 	else
 		return ("something");
 }
@@ -70,7 +70,7 @@ char	*get_next_line(int fd)
 	char		*result;
 	int			nl;
 
-	if (!fd || fd == -1 || BUFFER_SIZE < 1)
+	if (!fd || fd == -1 || BUFFER_SIZE < 1 || read(fd, NULL, 0) == -1)
 		return (NULL);
 	if (!total)
 	{
