@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: husrevakbas <husrevakbas@student.42.fr>    +#+  +:+       +#+        */
+/*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/23 22:58:15 by husrevakbas      ###   ########.fr       */
+/*   Updated: 2024/10/24 13:43:41 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 	1- Read line: correct behavior
 	2- NULL: there is nothing else to read, or an error occurred
 */
-	//check buffer length
-	//check buffer has new line
-	//read file
-	//check read return !0
-	//check buffer length 
-	//check buffer has new line
 char	*read_fd(char **total, char *buffer, int fd)
 {
 	int		bytes;
@@ -35,58 +29,56 @@ char	*read_fd(char **total, char *buffer, int fd)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
-			return (NULL); //free total return Null
-		if (bytes == 0)
-			break;
-		middle = *total;
-		*total = ft_strnjoin(middle, buffer, bytes);
-		free(middle);
+			return (NULL);
+		if (bytes)
+		{
+			middle = *total;
+			*total = ft_strnjoin(middle, buffer, bytes);
+			free(middle);
+		}
 	}
-	if (bytes == 0 && !**total)
-		return (NULL); //free total
-	if (**total && (newline = ft_strchr(*total, '\n')))
+	if (bytes == 0 && !(**total))
+		return (NULL);
+	else if (**total && ft_strchr(*total, '\n'))
 	{
-		result = ft_calloc(newline - *total + 2, sizeof(char));
-		ft_memmove(result, *total, newline - *total + 1);
-		result[newline - *total + 1]=0;
-		ft_memmove(*total, newline + 1, ft_strlen(newline) - 1);
+		newline = ft_strchr(*total, '\n');
+		result = ft_strnjoin("", *total, newline - *total + 1);
+		middle = *total;
+		*total = ft_strnjoin("", newline + 1, ft_strlen(newline));
+		free(middle);
 		return (result);
 	}
-	if (**total && !ft_strchr(*total, '\n'))
+	else if (**total && !ft_strchr(*total, '\n'))
 	{
 		result = ft_calloc(ft_strlen(*total) + 1, sizeof(char));
 		ft_memmove(result, *total, ft_strlen(*total) + 1);
-		*total[0] = 0;
+		**total = 0;
 		return (result);
 	}
-	else 
+	else
 		return ("something");
 }
 
 char	*get_next_line(int fd)
 {
-	char		*buffer;
+	char		buffer[BUFFER_SIZE];
 	static char	*total;
 	char		*result;
 	char		*newline;
 
-// printf("----%s\n", total);
-	if (fd == - 1)
+	if (!fd || fd == -1)
 		return (NULL);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buffer)
-		return (NULL);//free everything than return null
 	if (!total)
 		total = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (*total && (newline = ft_strchr(total, '\n')))
+	if (*total && ft_strchr(total, '\n'))
 	{
-		result = ft_calloc(newline - total + 2, sizeof(char));
-		ft_memmove(result, total, newline - total + 1);
-		result[newline - total + 1]=0;
+		newline = ft_strchr(total, '\n');
+		result = ft_strnjoin("", total, newline - total +1);
 		ft_memmove(total, newline + 1, ft_strlen(newline));
 		return (result);
 	}
 	result = read_fd(&total, buffer, fd);
-	free(buffer);
+	if (!result)
+		free(total);
 	return (result);
 }

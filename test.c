@@ -11,10 +11,14 @@ int main()
 		{
 			str = get_next_line(fd);
 			printf("%s", str);
-			//printf("\n");
 		}
 	}
-	printf("\n");
-	close(fd);
-	return (0);
+	//char *str;
+	//while (str = get_next_line(0))
+	//{
+	//	printf("%s", str);
+	//}
+	
+	//printf("%s", get_next_line(0));
+	//return (0);
 }

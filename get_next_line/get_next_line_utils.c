@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: husrevakbas <husrevakbas@student.42.fr>    +#+  +:+       +#+        */
+/*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/23 22:56:41 by husrevakbas      ###   ########.fr       */
+/*   Updated: 2024/10/24 13:42:20 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,18 @@ size_t	ft_strlen(const char *str)
 	return (length);
 }
 
-char	*ft_strnjoin(char *dst, char *src, size_t size)
+char	*ft_strnjoin(char *dst, char *str2, size_t size)
 {
 	char	*new;
 	size_t	i;
 	size_t	j;
-	size_t	src_length;
 	size_t	dst_length;
 
 	if (!dst)
 		return (NULL);
-	src_length = ft_strlen(src);
 	dst_length = ft_strlen(dst);
 	i = 0;
-	new = malloc(src_length + dst_length + 1);
+	new = malloc(size + dst_length + 1);
 	if (new)
 	{
 		while (dst[i])
@@ -47,14 +45,9 @@ char	*ft_strnjoin(char *dst, char *src, size_t size)
 			i++;
 		}
 		j = 0;
-		while (src[j] && j < size)
-		{
-			new[i] = src[j];
-			i++;
-			j++;
-		}
-		size--;
-	new[i] = 0;
+		while (str2[j] && j < size)
+			new[i++] = str2[j++];
+		new[i] = 0;
 	}
 	return (new);
 }
@@ -76,6 +69,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (0);
 }
+
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*pointer;
@@ -89,14 +83,11 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (0);
 	pointer = (char *) malloc(nmemb * size);
 	if (pointer == NULL)
-	{
-		free(pointer);
 		return (NULL);
-	}
 	i = 0;
 	while (i < size * nmemb)
 		pointer[i++] = 0;
-	return ((void *) pointer);
+	return (pointer);
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
@@ -123,6 +114,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 			n--;
 			destination[n] = source[n];
 		}
-	}	
+	}
 	return (dest);
 }
