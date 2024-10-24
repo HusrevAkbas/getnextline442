@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/24 13:42:20 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/24 14:51:37 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,27 @@ size_t	ft_strlen(const char *str)
 
 	length = 0;
 	while (str[length])
-	{
 		length++;
-	}
 	return (length);
 }
 
-char	*ft_strnjoin(char *dst, char *str2, size_t size)
+char	*ft_strnjoin(char *str1, char *str2, size_t size)
 {
 	char	*new;
 	size_t	i;
 	size_t	j;
 	size_t	dst_length;
 
-	if (!dst)
+	if (!str1)
 		return (NULL);
-	dst_length = ft_strlen(dst);
+	dst_length = ft_strlen(str1);
 	i = 0;
 	new = malloc(size + dst_length + 1);
 	if (new)
 	{
-		while (dst[i])
+		while (str1[i])
 		{
-			new[i] = dst[i];
+			new[i] = str1[i];
 			i++;
 		}
 		j = 0;
@@ -52,7 +50,7 @@ char	*ft_strnjoin(char *dst, char *str2, size_t size)
 	return (new);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	char	*pointer;
 	int		size;
