@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/24 14:53:24 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/24 16:08:03 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*get_nl(char **total)
 	char	*result;
 
 	newline = ft_strchr(*total, '\n');
-	result = ft_strnjoin("", *total, newline - *total + 1);
+	result = ft_calloc(newline - *total + 2, sizeof(char));
+	ft_memmove(result, *total, newline - *total + 1);
 	ft_memmove(*total, newline + 1, ft_strlen(newline));
 	return (result);
 }
@@ -40,7 +41,7 @@ char	*read_fd(char **total, char *buffer, int fd)
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
 			return (NULL);
-		if (bytes)
+		if (bytes > 0)
 		{
 			middle = *total;
 			*total = ft_strnjoin(*total, buffer, bytes);
@@ -67,8 +68,9 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	static char	*total;
 	char		*result;
+	int			nl;
 
-	if (!fd || fd == -1)
+	if (!fd || fd == -1 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!total)
 	{
@@ -76,13 +78,14 @@ char	*get_next_line(int fd)
 		if (!total)
 			return (NULL);
 	}
-	buffer = ft_calloc(BUFFER_SIZE, sizeof(char));
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 	{
 		free(total);
 		return (NULL);
 	}
-	if (*total && ft_strchr(total, '\n'))
+	nl = where_nl(total);
+	if (nl)
 		result = get_nl(&total);
 	else
 		result = read_fd(&total, buffer, fd);

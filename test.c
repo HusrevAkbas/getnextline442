@@ -5,6 +5,8 @@ int main()
 {
 	int	fd = open("file", O_RDONLY);
 	char *str = "";
+	//get_next_line(NULL);
+	
 	if (fd != -1)
 	{
 		while (str)
@@ -14,6 +16,8 @@ int main()
 			free(str);
 		}
 	}
+	
+	
 	//char *str;
 	//while (str = get_next_line(0))
 	//{
