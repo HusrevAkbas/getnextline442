@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/29 16:41:04 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/29 18:55:28 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,44 @@ char	*get_nl(char **total)
 	return (result);
 }
 
-char	*read_fd(char **total, char *buffer, int fd)
+char	*read_file(char *total, char *buffer, int fd, int *bytes)
 {
-	int		bytes;
-	char	*result;
 	char	*middle;
 
-	bytes = 1;
-	while (bytes > 0 && !ft_strchr(*total, '\n') && read(fd, NULL, 0) != -1)
+	while (total && !ft_strchr(total, '\n') && *bytes > 0)
 	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes < 0)
-			return (clear(total));
-		if (bytes > 0)
+		*bytes = read(fd, buffer, BUFFER_SIZE);
+		if (*bytes == -1)
+			return (clear(&total));
+		if (*bytes > 0)
 		{
-			buffer[bytes] = 0;
-			middle = *total;
-			*total = ft_strnjoin(*total, buffer, bytes);
-			if (!*total)
-				return (clear(&middle));
+			buffer[*bytes] = 0;
+			middle = total;
+			total = ft_strnjoin(total, buffer, *bytes);
+			if (!total)
+			{
+				free(middle);
+				return (clear(&total));
+			}
 			free(middle);
 		}
+		else if (*bytes == 0)
+			return (total);
+		else
+			return (clear(&total));
 	}
+	return (total);
+}
+
+char	*read_fd(char **total, char *buffer, int fd)
+{
+	char	*result;
+	int		bytes;
+
+	bytes = 1;
+	*total = read_file(*total, buffer, fd, &bytes);
+	if (!*total)
+		return (NULL);
 	if (bytes == 0 && !(**total))
 		return (NULL);
 	else if (**total && !ft_strchr(*total, '\n'))
@@ -84,7 +100,6 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	static char	*total;
 	char		*result;
-	char		*nl;
 
 	if (fd == -1 || BUFFER_SIZE < 1 || (read(fd, NULL, 0) == -1))
 		return (clear(&total));
@@ -98,8 +113,7 @@ char	*get_next_line(int fd)
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (clear(&total));
-	nl = ft_strchr(total, '\n');
-	if (nl)
+	if (ft_strchr(total, '\n'))
 		result = get_nl(&total);
 	else
 		result = read_fd(&total, buffer, fd);
