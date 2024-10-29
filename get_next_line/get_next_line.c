@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/29 14:07:49 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/29 16:41:04 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,23 @@
 	1- Read line: correct behavior
 	2- NULL: there is nothing else to read, or an error occurred
 */
+char	*clear(char **total)
+{
+	free(*total);
+	*total = NULL;
+	return (NULL);
+}
+
 char	*get_nl(char **total)
 {
 	char	*newline;
 	char	*result;
 
 	newline = ft_strchr(*total, '\n');
-	result = ft_calloc(newline - *total + 2, sizeof(char));
+	result = malloc((newline - *total + 2) * sizeof(char));
+	if (!result)
+		return (clear(total));
+	result[newline - *total + 1] = 0;
 	ft_memmove(result, *total, newline - *total + 1);
 	ft_memmove(*total, newline + 1, ft_strlen(newline));
 	return (result);
@@ -40,11 +50,14 @@ char	*read_fd(char **total, char *buffer, int fd)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
-			return (NULL);
+			return (clear(total));
 		if (bytes > 0)
 		{
+			buffer[bytes] = 0;
 			middle = *total;
 			*total = ft_strnjoin(*total, buffer, bytes);
+			if (!*total)
+				return (clear(&middle));
 			free(middle);
 		}
 	}
@@ -52,7 +65,10 @@ char	*read_fd(char **total, char *buffer, int fd)
 		return (NULL);
 	else if (**total && !ft_strchr(*total, '\n'))
 	{
-		result = ft_calloc(ft_strlen(*total) + 1, sizeof(char));
+		result = malloc((ft_strlen(*total) + 1) * sizeof(char));
+		if (!result)
+			return (clear(total));
+		result[ft_strlen(*total)] = 0;
 		ft_memmove(result, *total, ft_strlen(*total));
 		**total = 0;
 		return (result);
@@ -70,27 +86,25 @@ char	*get_next_line(int fd)
 	char		*result;
 	char		*nl;
 
-	if (!fd || fd == -1 || BUFFER_SIZE < 1 || read(fd, NULL, 0) == -1)
-		return (NULL);
+	if (fd == -1 || BUFFER_SIZE < 1 || (read(fd, NULL, 0) == -1))
+		return (clear(&total));
 	if (!total)
 	{
-		total = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		total = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
 		if (!total)
 			return (NULL);
+		total[0] = 0;
 	}
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-	{
-		free(total);
-		return (NULL);
-	}
-	nl = ft_strchr(total);
+		return (clear(&total));
+	nl = ft_strchr(total, '\n');
 	if (nl)
 		result = get_nl(&total);
 	else
 		result = read_fd(&total, buffer, fd);
 	free(buffer);
 	if (!result)
-		free(total);
+		return (clear(&total));
 	return (result);
 }

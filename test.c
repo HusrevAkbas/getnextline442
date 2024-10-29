@@ -17,13 +17,10 @@ int main()
 		}
 	}
 	
-	
-	//char *str;
-	//while (str = get_next_line(0))
+	//while ((str = get_next_line(0)))
 	//{
 	//	printf("%s", str);
 	//}
 	
-	//printf("%s", get_next_line(0));
-	//return (0);
+	return (0);
 }

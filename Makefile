@@ -5,12 +5,12 @@ TARGET := test
 SRC := $(wildcard get_next_line*/*.c)# $(wildcard tests_bonus/*.c)
 
 all:
-	cc -g ${CFLAGS} ${SRC} test.c -o ${TARGET}
-	./${TARGET}
+	cc -g -lm -w ${SRC} test.c -o ${TARGET}
+#	./${TARGET}
 	
 d:
 	cc -g ${CFLAGS} -D BUFFER_SIZE=10 ${SRC} test.c -o ${TARGET}
-	./${TARGET} | cat -e
+#	./${TARGET} | cat -e
 
 clean:
 	rm -f test
@@ -18,7 +18,7 @@ clean:
 show:
 
 val:
-	cc -g ${CFLAGS} -D BUFFER_SIZE=40 ${SRC} test.c -o ${TARGET}
+	cc -g ${CFLAGS} -D BUFFER_SIZE=10 ${SRC} test.c -o ${TARGET}
 	valgrind -s --leak-check=yes --show-leak-kinds=all --track-origins=yes ./test
 
 run:
