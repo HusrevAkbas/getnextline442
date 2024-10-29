@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/24 16:11:10 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/29 14:08:03 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,6 @@ char	*ft_strnjoin(char *str1, char *str2, size_t size)
 		new[i] = 0;
 	}
 	return (new);
-}
-
-int	where_nl(char *total)
-{
-	int	i;
-	
-	if (!total)
-		return (0);
-	i = 0;
-	while (total[i])
-	{
-		if (total[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (0);
 }
 
 char	*ft_strchr(char *s, int c)

@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/24 16:54:33 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/29 14:07:49 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	static char	*total;
 	char		*result;
-	int			nl;
+	char		*nl;
 
 	if (!fd || fd == -1 || BUFFER_SIZE < 1 || read(fd, NULL, 0) == -1)
 		return (NULL);
@@ -84,7 +84,7 @@ char	*get_next_line(int fd)
 		free(total);
 		return (NULL);
 	}
-	nl = where_nl(total);
+	nl = ft_strchr(total);
 	if (nl)
 		result = get_nl(&total);
 	else
