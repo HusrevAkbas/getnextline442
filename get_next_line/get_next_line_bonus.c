@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/30 15:08:31 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/30 15:40:03 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*clear(char **total)
 	int	i;
 
 	i = 0;
-	while (i < 124)
+	while (i < 1024)
 	{
 		if (total[i])
 		{
