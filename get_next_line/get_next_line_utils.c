@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:24:03 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/29 14:08:03 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/30 11:35:59 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,6 @@ char	*ft_strchr(char *s, int c)
 		i++;
 	}
 	return (0);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	char	*pointer;
-	size_t	i;
-	size_t	div;
-
-	if (nmemb == 0 || size == 0)
-		return ((void *) malloc(0));
-	div = ULONG_MAX / nmemb;
-	if (div < size)
-		return (0);
-	pointer = (char *) malloc(nmemb * size);
-	if (pointer == NULL)
-		return (NULL);
-	i = 0;
-	while (i < size * nmemb)
-		pointer[i++] = 0;
-	return (pointer);
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
