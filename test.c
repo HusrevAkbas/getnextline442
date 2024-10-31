@@ -4,26 +4,26 @@
 int main()
 {
 	/*TEST MANDATORY*/
-	//int	fd = open("file", O_RDONLY);
-	//char *str = "";
-	//get_next_line(NULL);
+	int	fd = open("file", O_RDONLY);
+	char *str = "";
 	
-	//if (fd != -1)
-	//{
-	//	while (str)
-	//	{
-	//		str = get_next_line(fd);
-	//		printf("%s", str);
-	//		free(str);
-	//	}
-	//}
+	if (fd != -1)
+	{
+		while (str)
+		{
+			str = get_next_line(fd);
+			printf("%s", str);
+			free(str);
+			sleep(1);
+		}
+	}
 	
 	/*TEST USER INPUT*/
-	char *str;
-	while ((str = get_next_line(0)))
-	{
-		printf("%s", str);
-	}
+	//char *str;
+	//while ((str = get_next_line(0)))
+	//{
+	//	printf("%s", str);
+	//}
 	
 	/*TEST MITIPLE FILES*/
 	//int fda = open("filea", O_RDONLY);

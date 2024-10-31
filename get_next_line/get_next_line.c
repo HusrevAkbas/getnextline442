@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/31 16:16:25 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/31 16:48:22 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,9 @@ char	*read_file(char *total, char *buffer, int fd, int *bytes)
 			buffer[*bytes] = 0;
 			middle = total;
 			total = ft_strnjoin(total, buffer, *bytes);
-			if (!total)
-			{
-				free(middle);
-				return (clear(&total));
-			}
 			free(middle);
+			if (!total)
+				return (clear(&total));
 		}
 		else if (*bytes == 0)
 			return (total);
@@ -68,7 +65,7 @@ char	*read_file(char *total, char *buffer, int fd, int *bytes)
 	return (total);
 }
 
-char	*getline(char **total, char *buffer, int fd)
+char	*set_line(char **total, char *buffer, int fd)
 {
 	char	*result;
 	int		bytes;
@@ -76,9 +73,9 @@ char	*getline(char **total, char *buffer, int fd)
 	bytes = 1;
 	*total = read_file(*total, buffer, fd, &bytes);
 	if (!*total)
-		return (NULL);
+		return (clear(total));
 	if (bytes == 0 && !(**total))
-		return (NULL);
+		return (clear(total));
 	else if (**total && !ft_strchr(*total, '\n'))
 	{
 		result = malloc((ft_strlen(*total) + 1) * sizeof(char));
@@ -116,7 +113,7 @@ char	*get_next_line(int fd)
 	if (ft_strchr(total, '\n'))
 		result = get_nl(&total);
 	else
-		result = getline(&total, buffer, fd);
+		result = set_line(&total, buffer, fd);
 	free(buffer);
 	return (result);
 }
