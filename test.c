@@ -19,44 +19,54 @@ int main()
 	//}
 	
 	/*TEST USER INPUT*/
-	//while ((str = get_next_line(0)))
-	//{
-	//	printf("%s", str);
-	//}
+	char *str;
+	while ((str = get_next_line(0)))
+	{
+		printf("%s", str);
+	}
 	
 	/*TEST MITIPLE FILES*/
-	int fda = open("filea", O_RDONLY);
-	int fdb = open("fileb", O_RDONLY);
-	int fdc = open("filec", O_RDONLY);
+	//int fda = open("filea", O_RDONLY);
+	//int fdb = open("fileb", O_RDONLY);
+	//int fdc = open("filec", O_RDONLY);
 	
-	char *str;
+	//char *str;
 	
-	str = get_next_line(fda);
-	printf("%s", str);
+	//str = get_next_line(fda);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fdb);
-	printf("%s", str);
+	//str = get_next_line(fdb);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fdc);
-	printf("%s", str);
+	//str = get_next_line(fdc);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fdc);
-	printf("%s", str);
+	//str = get_next_line(fdc);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fda);
-	printf("%s", str);
+	//str = get_next_line(fda);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fdb);
-	printf("%s", str);
+	//str = get_next_line(fdb);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fda);
-	printf("%s", str);
+	//str = get_next_line(fda);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fdc);
-	printf("%s", str);
+	//str = get_next_line(fdb);
+	//printf("%s-", str);
+	//free(str);
 	
-	str = get_next_line(fdb);
-	printf("%s", str);
-	
+	//str = get_next_line(fdc);
+	//printf("%s-", str);
+	//free(str);
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:10:35 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/30 15:40:39 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:17:19 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <aio.h>
 # include <string.h> // DELETE THIS LINE
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 42
 # endif //BUFFER_SIZE
 
 typedef struct s_list

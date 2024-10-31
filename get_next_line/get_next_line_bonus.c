@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/31 15:13:51 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/31 16:25:36 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*read_file(char **total, char *buffer, int fd, int *bytes)
 	{
 		*bytes = read(fd, buffer, BUFFER_SIZE);
 		if (*bytes == -1)
-			return (clear(total));
+			return (free(total[fd]), total[fd] = NULL, NULL);
 		if (*bytes > 0)
 		{
 			buffer[*bytes] = 0;
@@ -75,7 +75,7 @@ char	*read_file(char **total, char *buffer, int fd, int *bytes)
 	return (total[fd]);
 }
 
-char	*get_myline(char **total, char *buffer, int fd)
+char	*set_line(char **total, char *buffer, int fd)
 {
 	char	*result;
 	int		bytes;
@@ -85,7 +85,7 @@ char	*get_myline(char **total, char *buffer, int fd)
 	if (!total[fd])
 		return (clear(total));
 	if (bytes == 0 && !total[fd][0])
-		return (NULL);
+		return (free(total[fd]), total[fd] = NULL, NULL);
 	else if (total[fd] && !ft_strchr(total[fd], '\n'))
 	{
 		result = malloc((ft_strlen(total[fd]) + 1) * sizeof(char));
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 	static char	*total[1024];
 	char		*result;
 
-	if (fd == -1 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (clear(total));
 	if (!total[fd])
 	{
@@ -123,7 +123,7 @@ char	*get_next_line(int fd)
 	if (ft_strchr(total[fd], '\n'))
 		result = get_nl(total, fd);
 	else
-		result = get_myline(total, buffer, fd);
+		result = set_line(total, buffer, fd);
 	free(buffer);
 	return (result);
 }

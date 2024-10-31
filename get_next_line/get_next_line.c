@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/30 14:49:05 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/31 16:16:25 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*read_file(char *total, char *buffer, int fd, int *bytes)
 	return (total);
 }
 
-char	*get_myline(char **total, char *buffer, int fd)
+char	*getline(char **total, char *buffer, int fd)
 {
 	char	*result;
 	int		bytes;
@@ -116,7 +116,7 @@ char	*get_next_line(int fd)
 	if (ft_strchr(total, '\n'))
 		result = get_nl(&total);
 	else
-		result = get_myline(&total, buffer, fd);
+		result = getline(&total, buffer, fd);
 	free(buffer);
 	return (result);
 }
