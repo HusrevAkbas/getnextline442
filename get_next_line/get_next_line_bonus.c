@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/30 15:40:03 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:13:51 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*clear(char **total)
 			free(total[i]);
 			total[i] = NULL;
 		}
+		i++;
 	}
 	return (NULL);
 }
@@ -48,33 +49,30 @@ char	*get_nl(char **total, int fd)
 	return (result);
 }
 
-char	*read_file(char *total, char *buffer, int fd, int *bytes)
+char	*read_file(char **total, char *buffer, int fd, int *bytes)
 {
 	char	*middle;
 
-	while (total && !ft_strchr(total, '\n') && *bytes > 0)
+	while (total[fd] && !ft_strchr(total[fd], '\n') && *bytes > 0)
 	{
 		*bytes = read(fd, buffer, BUFFER_SIZE);
 		if (*bytes == -1)
-		{
-			clear(&total);
-			return (NULL);
-		}
+			return (clear(total));
 		if (*bytes > 0)
 		{
 			buffer[*bytes] = 0;
-			middle = total;
-			total = ft_strnjoin(total, buffer, *bytes);
+			middle = total[fd];
+			total[fd] = ft_strnjoin(total[fd], buffer, *bytes);
 			free(middle);
-			if (!total)
-				return (clear(&total));
+			if (!total[fd])
+				return (clear(total));
 		}
 		else if (*bytes == 0)
-			return (total);
+			return (total[fd]);
 		else
-			return (clear(&total));
+			return (clear(total));
 	}
-	return (total);
+	return (total[fd]);
 }
 
 char	*get_myline(char **total, char *buffer, int fd)
@@ -83,9 +81,9 @@ char	*get_myline(char **total, char *buffer, int fd)
 	int		bytes;
 
 	bytes = 1;
-	total[fd] = read_file(total[fd], buffer, fd, &bytes);
+	total[fd] = read_file(total, buffer, fd, &bytes);
 	if (!total[fd])
-		return (NULL);
+		return (clear(total));
 	if (bytes == 0 && !total[fd][0])
 		return (NULL);
 	else if (total[fd] && !ft_strchr(total[fd], '\n'))
