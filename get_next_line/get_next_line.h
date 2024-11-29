@@ -6,17 +6,14 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:10:35 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/29 16:16:18 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/11/29 13:48:07 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# include <stdio.h> //	DELETE THIS LINE
 # include <stdlib.h>
 # include <unistd.h>
-# include <aio.h>
-# include <string.h> // DELETE THIS LINE
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif //BUFFER_SIZE

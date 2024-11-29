@@ -6,7 +6,7 @@
 /*   By: huakbas <huakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:08:21 by huakbas           #+#    #+#             */
-/*   Updated: 2024/10/31 16:48:22 by huakbas          ###   ########.fr       */
+/*   Updated: 2024/11/29 13:49:11 by huakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*set_line(char **total, char *buffer, int fd)
 	else if (**total && ft_strchr(*total, '\n'))
 		return (get_nl(total));
 	else
-		return ("something");
+		return (NULL);
 }
 
 char	*get_next_line(int fd)

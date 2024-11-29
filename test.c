@@ -1,12 +1,13 @@
 #include "get_next_line/get_next_line.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 int main()
 {
 	/*TEST MANDATORY*/
-	int	fd = open("file", O_RDONLY);
+	int	fd = open("file", O_RDWR);
 	char *str = "";
-	
+
 	if (fd != -1)
 	{
 		while (str)
